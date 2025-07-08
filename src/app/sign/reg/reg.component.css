@@ -1,0 +1,19 @@
+/* Full-page layout */
+.register-page {
+  height: 100vh;
+  background: linear-gradient(to right, #f0f4ff, #e0e7ff);
+  padding: 20px;
+}
+
+/* Card Styling */
+.register-card {
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+/* Responsive Fix */
+@media (max-width: 576px) {
+  .register-card {
+    padding: 20px 15px;
+  }
+}
