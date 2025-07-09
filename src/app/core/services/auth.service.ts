@@ -10,7 +10,9 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
-  constructor( private _http:HttpClient ) {}
+  constructor( private _http:HttpClient ) {
+    this.autoLogin();
+  }
 
   URL = environment.API_URL;
   TOKEN_KEY = 'token'
@@ -66,6 +68,18 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_KEY)
     console.log('You Logout');
     this.myUser.next(null);
+  }
+
+   autoLogin() {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedUser = this.decode(token);
+        this.myUser.next(decodedUser);
+      } catch (error) {
+        this.logout(); // token is invalid
+      }
+    }
   }
 
 }

@@ -11,6 +11,8 @@ import { LoginComponent } from './sign/login/login.component';
 import { RegComponent } from './sign/reg/reg.component';
 import { CartComponent } from './front/cart/cart.component';
 import { ProfileComponent } from './front/profile/profile.component';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     
@@ -19,15 +21,15 @@ export const routes: Routes = [
         {path: 'home' , component:HomeComponent},
         {path: 'products',component:ListProductComponent},
         {path: 'product/:id' , component:ProductComponent},
-        {path: 'profile',component:ProfileComponent},
-        {path: 'cart',component:CartComponent},
+        {path: 'profile',component:ProfileComponent , canActivate:[authGuard]},
+        {path: 'cart',component:CartComponent , canActivate:[authGuard]},
         {path:'',redirectTo:'home',pathMatch:'full'},
     ]},
 
-    {path:'dashboard' , component:DashboardLayoutComponent,children:[
-        {path:'home', component:dashboardHome},
-        {path:'addproduct', component:AddProductComponent},
-        {path:'addproduct/form', component:AddProductFormComponent},
+    {path:'dashboard' , component:DashboardLayoutComponent , canActivate:[adminGuard],children:[
+        {path:'home', component:dashboardHome , canActivate:[adminGuard]},
+        {path:'addproduct', component:AddProductComponent , canActivate:[adminGuard]},
+        {path:'addproduct/form', component:AddProductFormComponent , canActivate:[adminGuard]},
         {path:'',component:dashboardHome}
     ]},
 

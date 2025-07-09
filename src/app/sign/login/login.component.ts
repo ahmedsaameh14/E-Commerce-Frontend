@@ -23,18 +23,29 @@ constructor(private _authS:AuthService ,
   login(){
     this._authS.login(this.loginForm.value).subscribe({
       next:()=>{
-        // const returnedRoute = this._activatedRoute.snapshot.queryParamMap.get('')
+        const returnedRoute = this._activatedRoute.snapshot.queryParamMap.get('returnurl')    // To use snapshot should call ActivatedRoute
+        const isAdminRoute = returnedRoute?.startsWith('/dashboard');
+        const isUserRoute = returnedRoute?.startsWith('/');
 
         if(this._authS.getRole() === 'user'){
-          this._router.navigate(['/home'])
+
+          if(returnedRoute && isUserRoute){
+            this._router.navigateByUrl(returnedRoute)
+          }else {
+            this._router.navigate(['/home'])
+          }
         }
 
-        else if(this._authS.getRole() === 'admin'){
-          this._router.navigate(['/dashboard'])
+        else if (this._authS.getRole() === 'admin'){
+
+          if(returnedRoute && isAdminRoute){
+            this._router.navigateByUrl(returnedRoute)
+          }else{
+            this._router.navigate(['/dashboard'])
+          }
         }
 
-        console.log('You Login');
-        
+        console.log('Login Ok');
       },
       error: (err) =>{console.log(err.message)}
     })
