@@ -1,0 +1,97 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+.custom-navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 0.8rem 0;
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    .brand-text {
+      color: #2c3e50;
+    }
+    .brand-dot {
+      color: #3498db;
+    }
+  }
+
+  .nav-link {
+    color: #34495e;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #3498db;
+    }
+
+    &.active {
+      color: #3498db;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 1rem;
+        right: 1rem;
+        height: 2px;
+        background: #3498db;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .icon-link {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .btn-register {
+    background: #3498db;
+    color: white !important;
+    border-radius: 6px;
+    margin-left: 0.5rem;
+
+    &:hover {
+      background: #2980b9;
+      transform: translateY(-1px);
+    }
+  }
+
+  .user-dropdown {
+    &::after {
+      display: none;
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+  }
+
+  .navbar-toggler {
+    border: none;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

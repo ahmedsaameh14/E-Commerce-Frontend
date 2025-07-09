@@ -1,1 +1,45 @@
-<p>home works!</p>
+<!-- Home Component -->
+<div class="home-page">
+  <!-- Section 1: Welcome Cover -->
+  <section class="welcome-section">
+    <div class="welcome-overlay">
+      <h1 class="welcome-text">Welcome to VIX</h1>
+      <p class="welcome-subtext">Discover amazing products at unbeatable prices</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80" 
+         alt="Cover Image" class="img-fluid">
+  </section>
+
+  <!-- Section 2: Call to Action -->
+  <section class="cta-section">
+    <div class="cta-overlay">
+      <h2>Start Shopping Now</h2>
+      <p>Explore our wide range of products</p>
+      <button class="btn btn-primary btn-lg" routerLink="/products">products</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1350&q=80" 
+         alt="Products Cover" class="cta-img">
+  </section>
+
+  <!-- Section 3: Contact Form -->
+  <section class="contact-section">
+    <div class="container">
+      <h2 class="text-center mb-5">Contact Us</h2>
+      <form class="contact-form">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Your name">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Your email">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="5" placeholder="Your message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+</div>

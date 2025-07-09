@@ -9,6 +9,8 @@ import { AddProductComponent } from './dashboard/add-product/add-product.compone
 import { AddProductFormComponent } from './dashboard/add-product-form/add-product-form.component';
 import { LoginComponent } from './sign/login/login.component';
 import { RegComponent } from './sign/reg/reg.component';
+import { CartComponent } from './front/cart/cart.component';
+import { ProfileComponent } from './front/profile/profile.component';
 
 export const routes: Routes = [
     
@@ -17,6 +19,8 @@ export const routes: Routes = [
         {path: 'home' , component:HomeComponent},
         {path: 'products',component:ListProductComponent},
         {path: 'product/:id' , component:ProductComponent},
+        {path: 'profile',component:ProfileComponent},
+        {path: 'cart',component:CartComponent},
         {path:'',redirectTo:'home',pathMatch:'full'},
     ]},
 

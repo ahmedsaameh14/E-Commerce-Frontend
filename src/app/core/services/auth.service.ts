@@ -4,7 +4,6 @@ import { environment } from '../../../environment/environment';
 import { IAuth, ILoginRes, IReg, IUser } from '../models/model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
-import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
