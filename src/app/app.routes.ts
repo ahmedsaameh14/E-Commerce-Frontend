@@ -20,7 +20,7 @@ export const routes: Routes = [
     {path:'' , component:LayoutComponent,children:[
         {path: 'home' , component:HomeComponent},
         {path: 'products',component:ListProductComponent},
-        {path: 'product/:id' , component:ProductComponent},
+        {path: 'products/:id' , component:ProductComponent},
         {path: 'profile',component:ProfileComponent , canActivate:[authGuard]},
         {path: 'cart',component:CartComponent , canActivate:[authGuard]},
         {path:'',redirectTo:'home',pathMatch:'full'},

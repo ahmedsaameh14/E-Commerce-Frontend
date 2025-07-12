@@ -27,7 +27,7 @@ constructor(private _authS:AuthService ,
         const isAdminRoute = returnedRoute?.startsWith('/dashboard');
         const isUserRoute = returnedRoute?.startsWith('/');
 
-        if(this._authS.getRole() === 'user'){
+        if(this._authS.getRole() === 'user' && this._authS.getToken()){
 
           if(returnedRoute && isUserRoute){
             this._router.navigateByUrl(returnedRoute)
@@ -36,7 +36,7 @@ constructor(private _authS:AuthService ,
           }
         }
 
-        else if (this._authS.getRole() === 'admin'){
+        else if (this._authS.getRole() === 'admin' && this._authS.getToken()){
 
           if(returnedRoute && isAdminRoute){
             this._router.navigateByUrl(returnedRoute)

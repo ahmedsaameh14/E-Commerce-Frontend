@@ -19,3 +19,30 @@ export interface IUser{
     id:string,
     role:string,
 }
+
+export interface IProduct{
+    _id:string;
+    name:string;
+    price:number;
+    desc:string;
+    imgURL:string;
+    stock:number;
+}
+
+export interface IProductsRes {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalResult: number;
+  result: IProduct[];
+}
+
+export interface IProductRes {
+  message: string,
+  data: IProduct;
+}
+
+export interface IProductRelatedRes {
+  message: string;
+  data: IProduct[];
+}
