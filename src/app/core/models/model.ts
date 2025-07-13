@@ -27,6 +27,8 @@ export interface IProduct{
     desc:string;
     imgURL:string;
     stock:number;
+
+    subCategory:string;
 }
 
 export interface IProductsRes {
@@ -45,4 +47,12 @@ export interface IProductRes {
 export interface IProductRelatedRes {
   message: string;
   data: IProduct[];
+}
+
+export interface PaginatedResult<T> {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalResult: number;
+  result: T[];
 }

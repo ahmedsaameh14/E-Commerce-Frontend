@@ -16,6 +16,9 @@ import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     
+    {path:'login',component:LoginComponent},
+
+    {path:'reg',component:RegComponent},
     
     {path:'' , component:LayoutComponent,children:[
         {path: 'home' , component:HomeComponent},
@@ -24,18 +27,18 @@ export const routes: Routes = [
         {path: 'profile',component:ProfileComponent , canActivate:[authGuard]},
         {path: 'cart',component:CartComponent , canActivate:[authGuard]},
         {path:'',redirectTo:'home',pathMatch:'full'},
+        // { path: '**', redirectTo: 'home' }
     ]},
 
     {path:'dashboard' , component:DashboardLayoutComponent , canActivate:[adminGuard],children:[
         {path:'home', component:dashboardHome , canActivate:[adminGuard]},
         {path:'addproduct', component:AddProductComponent , canActivate:[adminGuard]},
         {path:'addproduct/form', component:AddProductFormComponent , canActivate:[adminGuard]},
-        {path:'',component:dashboardHome}
+        {path:'addproduct/form/:id', component:AddProductFormComponent , canActivate:[adminGuard]},     // To Edit in Product
+        {path:'',component:dashboardHome},
+        {path: '**', redirectTo: 'dashboard/home'},
     ]},
 
-    {path:'login',component:LoginComponent},
 
-    {path:'reg',component:RegComponent},
-
-    { path: '**', redirectTo: 'home' },
+    // { path: '**', redirectTo: 'home' },
 ];

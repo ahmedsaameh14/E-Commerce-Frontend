@@ -1,1 +1,37 @@
-<p>add-product-form works!</p>
+<div class="container mt-4">
+  <h3>{{ isEdit ? 'Edit' : 'Add' }} Product</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label>Name</label>
+      <input formControlName="name" type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label>Price</label>
+      <input formControlName="price" type="number" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea formControlName="desc" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Stock</label>
+      <input formControlName="stock" type="number" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label>SubCategory</label>
+      <select formControlName="subCategory" class="form-select">
+        <option value="">-- Select SubCategory --</option>
+        <option *ngFor="let cat of subCategories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>Add New SubCategory (Optional)</label>
+      <input formControlName="newSubCategory" type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label>Image</label>
+      <input type="file" class="form-control" (change)="onFileChange($event)">
+    </div>
+    <button class="btn btn-primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
+  </form>
+</div>
