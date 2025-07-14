@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class AddProductComponent implements OnInit {
   products: IProduct[] = [];
+  currentPage = 1;
+  totalPages = 1;
 
   constructor(private _produstS: ProductsService, private _router: Router) {}
 
@@ -19,17 +21,25 @@ export class AddProductComponent implements OnInit {
     this.loadProducts();
   }
 
-  loadProducts() {
-    this._produstS.getProducts().subscribe((res) => {
-      this.products = res.result;
-    });
-  }
-
+  
   goToAdd() {
     this._router.navigate(['/dashboard/addproduct/form']);
   }
-
+  
   editProduct(id: string) {
     this._router.navigate(['/dashboard/addproduct/form', id]);
+  }
+  
+  loadProducts(page: number = 1): void {
+    this._produstS.getProducts(page).subscribe((res) => {
+      this.products = res.result;
+      this.currentPage = res.page;
+      this.totalPages = res.totalPages;
+    });
+  }
+  
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.loadProducts(page);
   }
 }

@@ -24,10 +24,15 @@
         <option *ngFor="let cat of subCategories" [value]="cat._id">{{ cat.name }}</option>
       </select>
     </div>
-    <div class="mb-3">
-      <label>Add New SubCategory (Optional)</label>
-      <input formControlName="newSubCategory" type="text" class="form-control">
-    </div>
+
+    <div class="mb-3 d-flex gap-2 align-items-end">
+  <div class="flex-grow-1">
+    <label>Add New SubCategory (Optional)</label>
+    <input formControlName="newSubCategory" type="text" class="form-control">
+  </div>
+  <button type="button" class="btn btn-outline-primary" (click)="addNewSubCategory()">Add</button>
+</div>
+
     <div class="mb-3">
       <label>Image</label>
       <input type="file" class="form-control" (change)="onFileChange($event)">

@@ -6,12 +6,12 @@ import { ProductsService } from '../../core/services/products.service';
 
 @Component({
   selector: 'app-add-product-form',
-  imports: [ CommonModule , ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-product-form.component.html',
   styleUrl: './add-product-form.component.css'
 })
 export class AddProductFormComponent implements OnInit {
-
   form: FormGroup;
   id: string = '';
   isEdit = false;
@@ -56,8 +56,25 @@ export class AddProductFormComponent implements OnInit {
     }
   }
 
+  addNewSubCategory() {
+    const newSubCatName = this.form.get('newSubCategory')?.value?.trim();
+    if (!newSubCatName) return;
 
-  // Chat GPT 
+    this._productS.addSubCategory(newSubCatName).subscribe({
+      next: (res: any) => {
+        const newSub = res.data;
+        this.subCategories.push(newSub);
+        this.form.patchValue({
+          subCategory: newSub._id,
+          newSubCategory: ''
+        });
+      },
+      error: (err) => {
+        alert('Failed to add subcategory: ' + err.error?.message);
+      }
+    });
+  }
+
   onSubmit() {
     const formData = new FormData();
     const newSubCat = this.form.value.newSubCategory;
