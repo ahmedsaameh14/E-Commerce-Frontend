@@ -7,21 +7,46 @@
 
   .navbar-brand {
     font-size: 1.5rem;
+
     .brand-text {
       color: #2c3e50;
     }
+
     .brand-dot {
       color: #3498db;
     }
+  }
+
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .nav-item {
+    margin: 0 0.2rem;
+  }
+
+  .navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
   }
 
   .nav-link {
     color: #34495e;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    margin: 0 0.2rem;
     position: relative;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 1.2rem;
+      vertical-align: middle;
+      line-height: 1;
+    }
 
     &:hover {
       color: #3498db;
@@ -29,6 +54,7 @@
 
     &.active {
       color: #3498db;
+
       &::after {
         content: "";
         position: absolute;
@@ -47,6 +73,15 @@
     display: flex;
     align-items: center;
     position: relative;
+    padding: 0.5rem 0.8rem;
+    height: 100%;
+    padding: 0.5rem 0.9rem;
+
+    i {
+      font-size: 1.2rem;
+      vertical-align: middle;
+      line-height: 1;
+    }
 
     .cart-badge {
       position: absolute;
@@ -69,10 +104,34 @@
     color: white !important;
     border-radius: 6px;
     margin-left: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
 
     &:hover {
       background: #2980b9;
       transform: translateY(-1px);
+    }
+  }
+
+  .btn-outline-danger.btn-sm {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.75rem;
+    margin-left: 0.5rem;
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 1.1rem;
+        margin-right: 6px;
+      }
     }
   }
 
@@ -82,14 +141,9 @@
     }
   }
 
-  .dropdown-menu {
-    border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-  }
-
   .navbar-toggler {
     border: none;
+
     &:focus {
       box-shadow: none;
     }
