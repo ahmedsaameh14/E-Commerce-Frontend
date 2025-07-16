@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../core/services/cart.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   standalone: true,
@@ -12,7 +13,7 @@ import { RouterLink } from '@angular/router';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService , private _router:Router , private _authS:AuthService) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -53,9 +54,17 @@ getTotal(): number {
   return this.cartItems.reduce((total, item) => total + (item.currentPrice * item.quantity), 0);
 }
 
-checkout(): void {
-  
-}
+ goToCheckout(): void {
+    if (!this.isLoggedIn()) {
+      this._router.navigate(['/auth/login']);
+      return;
+    }
+    this._router.navigate(['/checkout']);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this._authS.getToken();
+  }
 
   
 }

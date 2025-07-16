@@ -76,7 +76,7 @@
         <h4 class="mb-0 total-price">{{ getTotal() | currency:'EGP ' }}</h4>
       </div>
       <div class="d-grid gap-2 mt-3">
-        <button class="btn btn-lg btn-success checkout-btn" (click)="checkout()">
+        <button class="btn btn-lg btn-success checkout-btn" (click)="goToCheckout()">
           <i class="fas fa-credit-card me-2"></i> Proceed to Checkout
         </button>
         <button class="btn btn-outline-primary continue-btn" routerLink="/products">

@@ -1,0 +1,109 @@
+<form #checkoutForm="ngForm" (ngSubmit)="placeOrder()" class="container bg-white p-4 rounded shadow-sm" style="max-width: 28rem;">
+    <!-- Form Title -->
+    <h2 class="h4 fw-bold text-dark mb-4">Shipping Information</h2>
+    
+    <!-- Address Fields -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label for="address1" class="form-label">City*</label>
+        <input 
+          type="text" 
+          id="address1" 
+          name="address1" 
+          [(ngModel)]="address1" 
+          placeholder="e.g. Cairo" 
+          required
+          class="form-control"
+        >
+      </div>
+      
+      <div class="col-md-6">
+        <label for="address2" class="form-label">District*</label>
+        <input 
+          type="text" 
+          id="address2" 
+          name="address2" 
+          [(ngModel)]="address2" 
+          placeholder="e.g. Nasr City" 
+          required
+          class="form-control"
+        >
+      </div>
+    </div>
+  
+    <div class="row g-3 mb-3">
+      <div class="col-12">
+        <label for="address3" class="form-label">Street*</label>
+        <input 
+          type="text" 
+          id="address3" 
+          name="address3" 
+          [(ngModel)]="address3" 
+          placeholder="e.g. Abbas El-Akkad" 
+          required
+          class="form-control"
+        >
+      </div>
+      
+      <div class="col-12">
+        <label for="address4" class="form-label">Apartment Details*</label>
+        <input 
+          type="text" 
+          id="address4" 
+          name="address4" 
+          [(ngModel)]="address4" 
+          placeholder="e.g. Building 5, Apt 12" 
+          required
+          class="form-control"
+        >
+      </div>
+    </div>
+  
+    <!-- Phone Field -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number*</label>
+      <div class="input-group">
+        <span class="input-group-text">+20</span>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          [(ngModel)]="phone" 
+          placeholder="e.g. 1234567890" 
+          required
+          class="form-control"
+        >
+      </div>
+    </div>
+  
+    <!-- Payment Method -->
+    <div class="mb-4">
+      <label for="paymentMethod" class="form-label">Payment Method*</label>
+      <select 
+        id="paymentMethod" 
+        name="paymentMethod" 
+        [(ngModel)]="paymentMethod" 
+        required
+        class="form-select"
+      >
+        <option value="" disabled selected>Select payment method</option>
+        <option value="Cash">Cash on Delivery</option>
+        <option value="CreditCard">Credit Card</option>
+        <option value="Instapay">Instapay</option>
+      </select>
+    </div>
+  
+    <!-- Submit Button -->
+    <button 
+      type="submit" 
+      [disabled]="checkoutForm.invalid"
+      class="btn btn-primary w-100 py-2"
+    >
+      <span class="d-flex align-items-center justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock me-2" viewBox="0 0 16 16">
+          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+        </svg>
+        Confirm Order
+      </span>
+    </button>
+</form>

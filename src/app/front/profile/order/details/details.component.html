@@ -1,0 +1,89 @@
+<div class="bg-white rounded-3 shadow-sm overflow-hidden mt-4">
+    <!-- Order Header -->
+    <div class="p-4 border-bottom">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+            <div>
+                <h3 class="h5 fw-bold text-dark">Order #{{ orderDetails?.orderNumber || orderDetails?._id.slice(-8) }}
+                </h3>
+                <p class="small text-muted mb-0">
+                    Placed on {{ orderDetails?.createdAt | date:'mediumDate' }} at {{ orderDetails?.createdAt |
+                    date:'shortTime' }}
+                </p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="small fw-medium">Status:</span>
+                <span class="badge rounded-pill text-capitalize" [ngClass]="{
+                        'bg-warning text-dark': orderDetails?.status === 'pending',
+                        'bg-primary': orderDetails?.status === 'confirmed',
+                        'bg-info': orderDetails?.status === 'shipped',
+                        'bg-success': orderDetails?.status === 'delivered',
+                        'bg-danger': orderDetails?.status === 'cancelled'
+                    }">
+                    {{ orderDetails?.status }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="list-group list-group-flush">
+        <div *ngFor="let product of selectedOrderProducts" class="list-group-item">
+            <div class="d-flex gap-3">
+                <img [src]="'http://localhost:3000/uploads/' + product.productId.imgURL" [alt]="product.productId.name"
+                    class="rounded border" style="width: 64px; height: 64px; object-fit: cover;" />
+
+                <div class="flex-grow-1">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
+                        <div>
+                            <h5 class="mb-1 fw-medium">{{ product.productId?.product_title }}</h5>
+                            <p class="small text-muted mb-0">{{ product.productId?.brand || 'Generic Brand' }}</p>
+                        </div>
+                        <span class="fw-medium">{{ product.price }} EGP</span>
+                    </div>
+
+                    <div class="mt-2 d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">
+                            Quantity: <span class="fw-medium">{{ product.quantity }}</span>
+                        </span>
+                        <span class="fw-medium">
+                            Subtotal: {{ (product.price * product.quantity) }} EGP
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="p-4 bg-light border-top">
+        <div class="ms-auto" style="max-width: 20rem;">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Subtotal:</span>
+                <span class="fw-medium">{{ calculateSubtotal() }} EGP</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Shipping:</span>
+                <span class="fw-medium">{{ orderDetails?.shippingCost || 0 }} EGP</span>
+            </div>
+            <div class="d-flex justify-content-between border-top pt-3">
+                <span class="fw-bold">Total:</span>
+                <span class="fw-bold">{{ calculateSubtotal() }} EGP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Actions -->
+    <div *ngIf="orderDetails?.status === 'pending'" class="p-4 bg-light border-top">
+        <button (click)="cancelOrder(orderDetails._id)"
+            class="btn btn-outline-danger d-inline-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                viewBox="0 0 16 16">
+                <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+            Cancel Order
+        </button>
+    </div>
+</div>

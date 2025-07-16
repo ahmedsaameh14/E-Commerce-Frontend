@@ -1,1 +1,147 @@
-<p>profile works!</p>
+<div class="container">
+  <div class="row" *ngIf="profileData">
+    <!-- Sidebar -->
+    <div class="col-md-4 mb-4 mb-md-0">
+      <div class="card mb-4 text-center">
+        <div class="card-body">
+          <div
+            class="mx-auto mb-4 rounded-circle bg-light d-flex align-items-center justify-content-center overflow-hidden"
+            style="width: 96px; height: 96px;">
+            <i class="fas fa-user fa-2x text-primary"></i>
+          </div>
+          <h2 class="h5 fw-bold">{{profileData.name}}</h2>
+          <div class="mt-4 pt-4 border-top">
+            <button class="btn btn-link text-primary">
+              <i class="fas fa-pencil-alt me-2"></i>Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3 class="h6 fw-semibold mb-4 d-flex align-items-center">
+            <i class="fas fa-tachometer-alt me-2 text-primary"></i> Dashboard
+          </h3>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a href="#" class="nav-link text-dark d-flex align-items-center hover-primary">
+                <i class="fas fa-shopping-bag me-3"></i> Orders
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link text-dark d-flex align-items-center hover-primary">
+                <i class="fas fa-map-marker-alt me-3"></i> Addresses
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link text-dark d-flex align-items-center hover-primary">
+                <i class="fas fa-heart me-3"></i> Wishlist
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link text-dark d-flex align-items-center hover-primary">
+                <i class="fas fa-cog me-3"></i> Account Details
+              </a>
+            </li>
+            <li class="nav-item">
+              <button (click)="logout()"
+                class="nav-link text-dark d-flex align-items-center hover-primary w-100 text-start">
+                <i class="fas fa-sign-out-alt me-3"></i> Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-8">
+      <!-- Personal Info -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h5 fw-bold d-flex align-items-center">
+              <i class="fas fa-user-circle me-3 text-primary"></i> Personal Information
+            </h2>
+            <button class="btn btn-link text-primary p-0">
+              <i class="fas fa-pencil-alt me-1"></i> Edit
+            </button>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label small text-muted">Full Name</label>
+              <p class="fw-medium">{{profileData.name}}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label small text-muted">Email</label>
+              <p class="fw-medium">{{profileData.email}}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label small text-muted">Phone</label>
+              <p class="fw-medium">{{profileData.phone_number}}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label small text-muted">Birthday</label>
+              <p class="fw-medium">N/A</p>
+            </div>
+          </div>
+
+          <div *ngIf="profileData.address && profileData.address.length > 0">
+            <label class="fw-medium text-muted">Addresses:</label>
+            <ul class="list-unstyled ms-3">
+              <li *ngFor="let addr of profileData.address">• {{ addr }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4" *ngIf="orders.length > 0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h5 fw-bold d-flex align-items-center">
+              <i class="fas fa-shopping-bag me-3 text-primary"></i> Recent Orders
+            </h2>
+          </div>
+
+          <div class="list-group list-group-flush">
+            <div *ngFor="let order of orders" class="list-group-item list-group-item-action">
+              <a routerLink="/orders/{{order._id}}" class="text-decoration-none text-reset">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div>
+                    <p class="fw-bold">Order #{{ order.orderNumber }}</p>
+                  </div>
+                  <span class="badge rounded-pill" [ngClass]="{
+  'bg-warning text-dark': order.status === 'pending',
+  'bg-success': order.status === 'delivered' || order.status === 'confirmed',
+  'bg-info text-dark': order.status === 'shipped',
+  'bg-secondary': order.status === 'returned',
+  'bg-danger': order.status === 'cancelled'
+}">
+                    {{ order.status | titlecase }}
+                  </span>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 my-3">
+                  <img *ngFor="let product of order.products"
+                    [src]="'http://localhost:3000/uploads/'+product.productId.imgURL" [alt]="product.productId.name"
+                    class="img-thumbnail" style="width: 48px; height: 48px; object-fit: cover;" />
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                  <p class="small">{{ order.products.length }} items</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && orders.length === 0" class="text-center text-muted p-5">
+        <i class="fas fa-box-open fa-3x mb-3"></i>
+        <p>No recent orders found.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,9 @@ import { CartComponent } from './front/cart/cart.component';
 import { ProfileComponent } from './front/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
+import { CheckoutComponent } from './front/cart/checkout/checkout.component';
+import { DetailsComponent } from './front/profile/order/details/details.component';
+import { OrdersComponent } from './dashboard/order/order.component';
 
 export const routes: Routes = [
     
@@ -25,7 +28,9 @@ export const routes: Routes = [
         {path: 'products',component:ListProductComponent},
         {path: 'products/:id' , component:ProductComponent},
         {path: 'profile',component:ProfileComponent , canActivate:[authGuard]},
+        {path: 'orders/:id' , component:DetailsComponent, canActivate:[authGuard]},
         {path: 'cart',component:CartComponent , canActivate:[authGuard]},
+        {path: 'checkout' , component:CheckoutComponent , canActivate:[authGuard]},
         {path:'',redirectTo:'home',pathMatch:'full'},
         // { path: '**', redirectTo: 'home' }
     ]},
@@ -35,6 +40,7 @@ export const routes: Routes = [
         {path:'addproduct', component:AddProductComponent , canActivate:[adminGuard]},
         {path:'addproduct/form', component:AddProductFormComponent , canActivate:[adminGuard]},
         {path:'addproduct/form/:id', component:AddProductFormComponent , canActivate:[adminGuard]},     // To Edit in Product
+        {path:'orders' , component:OrdersComponent , canActivate:[adminGuard]},
         {path:'',component:dashboardHome},
         {path: '**', redirectTo: 'dashboard/home'},
     ]},
