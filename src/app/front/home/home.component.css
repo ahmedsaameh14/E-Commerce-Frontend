@@ -1,124 +1,130 @@
-/* Home Page Styles */
 .home-page {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+
+  /* Welcome Section */
+  .welcome-section {
+    position: relative;
+    height: 95vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .welcome-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.65);
+      z-index: 1;
+    }
+
+    .welcome-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+
+      .welcome-text {
+        font-size: clamp(2.5rem, 8vw, 5rem); 
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+      }
+
+      .welcome-subtext {
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-weight: 300;
+        opacity: 0.9;
+      }
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+  }
+
+  /* CTA Section */
+  .cta-section {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    
+    .cta-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+      z-index: 1;
+    }
+
+    .cta-overlay {
+      position: relative;
+      z-index: 2;
+      color: white;
+      
+      .cta-content {
+        max-width: 650px;
+        
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+    .contact-card {
+      background: white;
+      padding: 3rem;
+      border-radius: 24px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+   
+    .form-control {
+      border: 2px solid #eee;
+      border-radius: 12px;
+      &:focus {
+        border-color: #3498db;
+        box-shadow: none;
+      }
+    }
+  }
 }
 
-/* Welcome Section */
-.welcome-section {
-  position: relative;
-  height: 90vh;
-  overflow: hidden;
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+  40% {transform: translateY(-10px) translateX(-50%);}
+  60% {transform: translateY(-5px) translateX(-50%);}
 }
 
-.welcome-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.7);
-}
-
-.welcome-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  width: 80%;
-}
-
-.welcome-text {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.welcome-subtext {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Spacing Between Sections */
-.cta-section,
-.contact-section {
-  margin-top: 3rem; /* adds spacing between them */
-}
-
-/* CTA Section: Overlay properly over image */
-.cta-section {
-  position: relative;
-  height: 70vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cta-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.6);
-  z-index: 1;
-}
-
-.cta-overlay {
-  position: relative;
-  z-index: 2; /* ensures it's above the image */
-  text-align: center;
-  color: white;
-  width: 80%;
-}
-
-/* Optional: Add transition for smoother appearance */
-.cta-section h2,
-.cta-section p,
-.cta-section button {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-}
-
-
-/* Contact Section */
-.contact-section {
-  padding: 5rem 0;
-  background-color: #f8f9fa;
-}
-
-.contact-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-.contact-section h2 {
-  font-size: 2.5rem;
-  color: #333;
-}
-
-/* Responsive Adjustments */
+/* Responsive Fixes */
 @media (max-width: 768px) {
-  .welcome-text {
-    font-size: 2.5rem;
-  }
-  
-  .welcome-subtext {
-    font-size: 1.2rem;
-  }
-  
-  .cta-section h2 {
-    font-size: 2rem;
-  }
-  
-  .cta-section p {
-    font-size: 1.2rem;
+  .cta-section {
+    text-align: center;
+    height: auto;
+    padding: 80px 0;
+    
+    .cta-content {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      border: none !important;
+    }
   }
 }

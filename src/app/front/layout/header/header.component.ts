@@ -24,5 +24,18 @@ export class HeaderComponent {
     console.log('You logout');
     
   }
+
+  isMenuCollapsed = true; // State for mobile menu
+
+  // Mocking the user observable for structure
+  // user$ = this.authService.user$; 
+
+  toggleMenu() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+  }
+
+  closeMenu() {
+    this.isMenuCollapsed = true;
+  }
   
 }
