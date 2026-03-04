@@ -24,5 +24,15 @@ export class HeaderComponent {
     console.log('You logout');
     
   }
+
+  isMenuCollapsed = true; // State for the mobile menu
+
+  toggleMenu() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+  }
+
+  closeMenu() {
+    this.isMenuCollapsed = true;
+  }
   
 }
