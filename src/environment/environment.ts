@@ -1,3 +1,3 @@
 export const environment ={
-    API_URL: 'https://e-commerce-backend-six-xi.vercel.app/'
+    API_URL: 'https://e-commerce-backend-six-xi.vercel.app'
 }
