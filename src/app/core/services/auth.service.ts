@@ -27,9 +27,11 @@ export class AuthService {
   public user$ = this.myUser.asObservable();
 
   // To Get data from Token
-  decode(token:string){
-    return jwtDecode<IUser>(token);
-  }
+  decode(token: string) {
+  const payload = token.split('.')[1];
+  const decoded = atob(payload); // decode base64
+  return JSON.parse(decoded) as IUser;
+}
 
   setToken(token:string){
     localStorage.setItem(this.TOKEN_KEY , token)
