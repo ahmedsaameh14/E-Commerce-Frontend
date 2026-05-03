@@ -63,4 +63,14 @@ export class ProductsService {
   addSubCategory(name: string) {
     return this._http.post(this.subCategoryURL, { name });
   }
+
+  deleteProduct(id: string) {
+  const token = localStorage.getItem('token');
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this._http.delete(`${this.URL}${id}`, { headers });
+}
 }

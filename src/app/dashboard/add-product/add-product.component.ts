@@ -42,4 +42,12 @@ export class AddProductComponent implements OnInit {
     if (page < 1 || page > this.totalPages) return;
     this.loadProducts(page);
   }
+
+  deleteProduct(id: string) {
+  if (confirm('Are you sure you want to delete this product?')) {
+    this._produstS.deleteProduct(id).subscribe(() => {
+      this.products = this.products.filter(p => p._id !== id);
+    });
+  }
+}
 }

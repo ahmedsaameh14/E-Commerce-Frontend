@@ -12,6 +12,9 @@
           <p>{{ product.desc }}</p>
           <p><strong>{{ product.price }} EGP</strong></p>
           <button class="btn btn-primary" (click)="editProduct(product._id)">Edit</button>
+          <button class="btn btn-danger ms-2" (click)="deleteProduct(product._id)">
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -26,7 +29,7 @@
       </li>
 
       <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-          [class.active]="currentPage === i + 1">
+        [class.active]="currentPage === i + 1">
         <a class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
       </li>
 
