@@ -125,7 +125,7 @@
 
                 <div class="d-flex flex-wrap gap-3 my-3">
                   <img *ngFor="let product of order.products"
-                    [src]="'http://localhost:3000/uploads/'+product.productId.imgURL" [alt]="product.productId.name"
+                    [src]="product.productId.imgURL" [alt]="product.productId.name"
                     class="img-thumbnail" style="width: 48px; height: 48px; object-fit: cover;" />
                 </div>
 

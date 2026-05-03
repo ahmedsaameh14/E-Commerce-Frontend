@@ -9,7 +9,7 @@
         <!-- Product Image -->
         <div class="col-md-2 col-4 text-center p-2">
           <img 
-            [src]="'http://localhost:3000/uploads/' + item.productId?.imgURL" 
+            [src]="item.productId?.imgURL" 
             alt="{{ item.productId?.name}}" 
             class="img-fluid rounded product-image">
         </div>

@@ -6,7 +6,7 @@
       <div class="card h-100 product-card shadow-sm">
         <!-- Product Image with hover effect -->
         <div class="product-image-container">
-          <img [src]="'http://localhost:3000/uploads/' + product.imgURL" class="card-img-top p-3"
+          <img [src]="product.imgURL" class="card-img-top p-3"
             alt="{{ product.name }}" style="height: 200px; object-fit: contain;">
           <div class="add-to-cart-overlay">
             <button class="btn btn-primary" [routerLink]="['/products/', product._id]">

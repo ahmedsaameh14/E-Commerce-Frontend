@@ -6,7 +6,7 @@
   <div class="row">
     <div *ngFor="let product of products" class="col-md-4">
       <div class="card mb-4">
-        <img [src]="'http://localhost:3000/uploads/' + product.imgURL" class="card-img-top" style="height: 200px; object-fit: contain">
+        <img [src]="product.imgURL" class="card-img-top" style="height: 200px; object-fit: contain">
         <div class="card-body">
           <h5>{{ product.name }}</h5>
           <p>{{ product.desc }}</p>
