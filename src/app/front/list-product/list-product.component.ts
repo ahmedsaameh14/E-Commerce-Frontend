@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
 import { IProduct } from '../../core/models/model';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 
 @Component({
@@ -17,7 +19,13 @@ export class ListProductComponent implements OnInit {
   currentPage = 1;
   totalPages = 1;
 
-  constructor(private _productS: ProductsService, private _cartS: CartService) { }
+  constructor(
+    private _productS: ProductsService, 
+    private _cartS: CartService,
+    private _authS: AuthService,
+    private _router: Router,
+    private _notificationS: NotificationService
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -34,20 +42,32 @@ export class ListProductComponent implements OnInit {
   goToPage(page: number) {
     if (page < 1 || page > this.totalPages) return;
     this.loadProducts(page);
+    // Scroll to top
+    window.scrollTo(0, 0);
   }
 
-  addToCart(productId: string) {
-  const quantity = 1; 
-  this._cartS.addToCart(productId, quantity).subscribe({
-    next: () => {
-      
-      console.log('Product added to cart');
-    },
-    error: (err) => {
-      console.error('Failed to add to cart:', err.error?.message || err.message);
+  addToCart(productId: string, event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Check if user is authenticated
+    if (!this._authS.getToken()) {
+      this._notificationS.showWarning('Please login first to add items to cart');
+      this._router.navigate(['/login'], { queryParams: { returnurl: '/products' } });
+      return;
     }
-  });
-}
+
+    const quantity = 1; 
+    this._cartS.addToCart(productId, quantity).subscribe({
+      next: () => {
+        this._notificationS.showSuccess('Product added to cart successfully!');
+      },
+      error: (err) => {
+        this._notificationS.showError('Failed to add product to cart');
+        console.error('Failed to add to cart:', err.error?.message || err.message);
+      }
+    });
+  }
 
 
 }

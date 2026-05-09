@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-reg',
@@ -18,7 +19,11 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './reg.component.css',
 })
 export class RegComponent {
-  constructor(private _authS: AuthService, private _router: Router) {}
+  constructor(
+    private _authS: AuthService, 
+    private _router: Router,
+    private _notificationS: NotificationService
+  ) {}
 
   regForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -26,7 +31,11 @@ export class RegComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
+  serverErrors: { [key: string]: string } = {};
+
   onSubmit() {
+    this.serverErrors = {};
+
     if (this.regForm.invalid) {
       this.regForm.markAllAsTouched();
       return;
@@ -34,10 +43,46 @@ export class RegComponent {
 
     this._authS.regUser(this.regForm.value).subscribe({
       next: (res) => {
-        console.log('Registration Successful', res);
+        this._notificationS.showSuccess('Registration successful! Please login to continue.');
         this._router.navigate(['/login']);
       },
-      error: (err) => console.log('Registration Failed', err),
+      error: (err) => {
+        const errorMessage = err.error?.message || 'Registration failed. Please try again.';
+        this._notificationS.showError(errorMessage);
+        
+        // Handle field-specific errors
+        if (err.error?.errors) {
+          this.serverErrors = err.error.errors;
+        }
+      },
     });
+  }
+
+  getFieldError(fieldName: string): string {
+    const field = this.regForm.get(fieldName);
+    
+    // Server-side error
+    if (this.serverErrors[fieldName]) {
+      return this.serverErrors[fieldName];
+    }
+
+    // Client-side validation errors
+    if (field?.touched && field?.invalid) {
+      if (fieldName === 'name') {
+        if (field.errors?.['required']) return 'Name is required';
+      } else if (fieldName === 'email') {
+        if (field.errors?.['required']) return 'Email is required';
+        if (field.errors?.['email']) return 'Enter a valid email';
+      } else if (fieldName === 'password') {
+        if (field.errors?.['required']) return 'Password is required';
+        if (field.errors?.['minlength']) return 'Password must be at least 6 characters';
+      }
+    }
+    return '';
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.regForm.get(fieldName);
+    return !!(field?.invalid && field?.touched) || !!this.serverErrors[fieldName];
   }
 }
