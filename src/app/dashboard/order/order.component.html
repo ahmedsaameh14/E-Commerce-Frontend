@@ -49,7 +49,7 @@
 
       <!-- Orders -->
       <div class="list-group list-group-flush">
-        <div *ngFor="let order of filteredOrders" class="list-group-item">
+        <div *ngFor="let order of pagedOrders" class="list-group-item">
           <div class="row g-3 align-items-center">
             <!-- Order Details -->
             <div class="col-md-3">
@@ -58,7 +58,7 @@
               </p>
               <div>
                 <p class="small text-muted mb-1">
-                  {{ order.products.length }} items
+                  {{ order.products.length || 0 }} items
                 </p>
                 <p class="small fw-medium">
                   {{ calculateOrderTotal(order) }} EGP
@@ -136,17 +136,17 @@
               >
                 <div class="d-flex align-items-center gap-2 p-2 bg-light rounded">
                   <img
-                    [src]="item.productId.imgURL"
-                    alt="{{ item.productId.name }}"
+                    [src]="getProductImage(item)"
+                    [alt]="getProductAlt(item)"
                     class="rounded" 
                     style="width: 40px; height: 40px; object-fit: cover;"
                   />
                   <div>
                     <p class="small fw-medium mb-0 text-truncate">
-                      {{ item.productId.name || "Product" }}
+                      {{ getProductName(item) }}
                     </p>
                     <p class="small text-muted mb-0">
-                      {{ item.quantity }} × {{ item.price }} EGP
+                      {{ item.quantity }} × {{ getProductPrice(item) }} EGP
                     </p>
                   </div>
                 </div>
@@ -169,22 +169,22 @@
             <p class="small text-muted fw-bold mb-2">Items:</p>
             <div class="row g-2">
               <div
-                *ngFor="let item of order.products"
+                *ngFor="let item of order.products || []"
                 class="col-auto"
               >
                 <div class="d-flex align-items-center gap-2 p-2 bg-light rounded" style="max-width: 200px;">
                   <img
-                    [src]="item.productId.imgURL"
-                    alt="{{ item.productId.name }}"
+                    [src]="getProductImage(item)"
+                    [alt]="getProductAlt(item)"
                     class="rounded" 
                     style="width: 40px; height: 40px; object-fit: cover;"
                   />
                   <div style="flex: 1; min-width: 0;">
                     <p class="small fw-medium mb-0 text-truncate">
-                      {{ item.productId.name || "Product" }}
+                      {{ getProductName(item) }}
                     </p>
                     <p class="small text-muted mb-0">
-                      {{ item.quantity }} × {{ item.price }} EGP
+                      {{ item.quantity }} × {{ getProductPrice(item) }} EGP
                     </p>
                   </div>
                 </div>
@@ -206,22 +206,22 @@
         </h3>
         <div class="row g-3">
           <div
-            *ngFor="let item of selectedOrder.products"
+            *ngFor="let item of selectedOrder.products || []"
             class="col-md-4"
           >
             <div class="d-flex align-items-center gap-3 bg-light p-3 rounded">
               <img
-                [src]="item.productId.imgURL"
-                alt="{{ item.productId.name }}"
+                [src]="getProductImage(item)"
+                [alt]="getProductAlt(item)"
                 class="rounded border" 
                 style="width: 56px; height: 56px; object-fit: cover;"
               />
               <div>
                 <p class="fw-medium mb-0">
-                  {{ item.productId.name || "Product" }}
+                  {{ getProductName(item) }}
                 </p>
                 <p class="small text-muted mb-0">
-                  Qty: {{ item.quantity }} × {{ item.price }} EGP
+                  Qty: {{ item.quantity }} × {{ getProductPrice(item) }} EGP
                 </p>
               </div>
             </div>
@@ -238,20 +238,20 @@
     <!-- Pagination -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 p-3 bg-white rounded shadow-sm">
       <div class="small text-muted mb-3 mb-md-0">
-        Showing <span class="fw-medium">1</span> to
-        <span class="fw-medium">5</span> of
-        <span class="fw-medium">24</span> orders
+        Showing <span class="fw-medium">{{ (currentPage - 1) * pageSize + 1 }}</span> to
+        <span class="fw-medium">{{ getPageEnd() }}</span> of
+        <span class="fw-medium">{{ filteredOrders.length }}</span> orders
       </div>
       <nav>
         <ul class="pagination pagination-sm mb-0">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="goToPage(currentPage - 1)" tabindex="-1">Previous</a>
           </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+          <li class="page-item" *ngFor="let page of pageNumbers" [class.active]="currentPage === page">
+            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="goToPage(currentPage + 1)">Next</a>
           </li>
         </ul>
       </nav>

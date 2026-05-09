@@ -96,8 +96,7 @@ export interface IOrders {
     _id:string,
     email:string
   };
-  products: [
-    {
+  products: {
       productId: {
         _id?: string;
         name: string;
@@ -111,8 +110,7 @@ export interface IOrders {
       quantity: number;
       price: number;
       _id?: string;
-    }
-  ];
+    }[];
   status: string;
   paymentMethod: string;
   createdAt:string

@@ -17,6 +17,10 @@ export class OrdersComponent implements OnInit {
   filteredOrders: IOrders[] = [];
   expandedOrderId!: string ;
   selectedOrder: IOrders | null = null;
+  currentPage = 1;
+  pageSize = 5;
+  totalPages = 1;
+  pagedOrders: IOrders[] = [];
   statusOptions = [
     { value: 'pending', label: 'Pending' },
     { value: 'confirmed', label: 'Confirmed' },
@@ -36,6 +40,9 @@ export class OrdersComponent implements OnInit {
       next: (res) => {
         this.orders = res.orders;
         this.filteredOrders = res.orders;
+        this.totalPages = Math.max(1, Math.ceil(this.filteredOrders.length / this.pageSize));
+        this.currentPage = 1;
+        this.updatePagedOrders();
         this.isLoading = false;
       },
       error: (err) => {
@@ -44,11 +51,13 @@ export class OrdersComponent implements OnInit {
       },
     });
   }
+
   getOrderDetails(){
     this._ordersService.getOrderByIdByAdmin(this.expandedOrderId).subscribe({
       next:(data)=>{ console.log(data)}
     })
   }
+
   updateStatus(orderId: string, newStatus: string): void {
     this._ordersService.updateOrderStatus(orderId, newStatus).subscribe({
       next: () => {
@@ -59,9 +68,13 @@ export class OrdersComponent implements OnInit {
       },
     });
   }
+
   calculateOrderTotal(order: any): number {
-    return order.products.reduce(
-      (sum: number, item: any) => sum + item.price * item.quantity,
+    return (order.products || []).reduce(
+      (sum: number, item: any) => {
+        const price = item.price ?? item.productId?.price ?? 0;
+        return sum + price * (item.quantity ?? 0);
+      },
       0
     );
   }
@@ -72,7 +85,7 @@ export class OrdersComponent implements OnInit {
     if (this.expandedOrderId) {
       this._ordersService.getOrderByIdByAdmin(orderId).subscribe({
         next: (res) => {
-          this.selectedOrder = res.order; // assuming response shape
+          this.selectedOrder = res.order ?? res.data ?? res;
         },
         error: (err) => {
           console.error('Error loading order details:', err);
@@ -81,6 +94,43 @@ export class OrdersComponent implements OnInit {
     } else {
       this.selectedOrder = null;
     }
+  }
+
+  updatePagedOrders(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.pagedOrders = this.filteredOrders.slice(start, start + this.pageSize);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePagedOrders();
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  getPageEnd(): number {
+    return Math.min(this.currentPage * this.pageSize, this.filteredOrders.length);
+  }
+
+  getProductName(item: any): string {
+    const product = item.productId;
+    return product?.name ?? product?.product_title ?? 'Product';
+  }
+
+  getProductImage(item: any): string {
+    const product = item.productId;
+    return product?.imgURL ?? product?.image ?? 'assets/default-product.png';
+  }
+
+  getProductAlt(item: any): string {
+    return this.getProductName(item);
+  }
+
+  getProductPrice(item: any): number {
+    return item.price ?? item.productId?.price ?? 0;
   }
   
   getStatusColor(status: string): string {

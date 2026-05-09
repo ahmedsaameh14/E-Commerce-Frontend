@@ -27,17 +27,17 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this._cartService.getUserCart().subscribe({
-      next: (items) => (this.cartItems = items.data || items),
+      next: (items) => {
+        const rawItems = items?.data ?? items;
+        this.cartItems = Array.isArray(rawItems) ? rawItems : [];
+      },
       error: (err) => console.error('Failed to load cart items:', err),
     });
   }
 
   placeOrder() {
-  console.log('cartItems:', this.cartItems); // debug log
-
-  // Filter out removed items before placing order
   const activeCartItems = Array.isArray(this.cartItems)
-    ? this.cartItems.filter((item: any) => item.removedAt === null)
+    ? this.cartItems.filter((item: any) => item.removedAt == null)
     : [];
 
   const orderData = {
@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
     },
     paymentMethod: this.paymentMethod,
     products: activeCartItems.map((item) => ({
-          productId: item.productId._id || item.productId,
+          productId: item.productId?._id ?? item.productId,
           quantity: item.quantity,
           price: item.currentPrice,
         }))
