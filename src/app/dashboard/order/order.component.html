@@ -163,6 +163,34 @@
               </div>
             </div>
           </div>
+
+          <!-- Desktop Items Preview -->
+          <div class="d-none d-md-block mt-3 border-top pt-3">
+            <p class="small text-muted fw-bold mb-2">Items:</p>
+            <div class="row g-2">
+              <div
+                *ngFor="let item of order.products"
+                class="col-auto"
+              >
+                <div class="d-flex align-items-center gap-2 p-2 bg-light rounded" style="max-width: 200px;">
+                  <img
+                    [src]="item.productId.imgURL"
+                    alt="{{ item.productId.name }}"
+                    class="rounded" 
+                    style="width: 40px; height: 40px; object-fit: cover;"
+                  />
+                  <div style="flex: 1; min-width: 0;">
+                    <p class="small fw-medium mb-0 text-truncate">
+                      {{ item.productId.name || "Product" }}
+                    </p>
+                    <p class="small text-muted mb-0">
+                      {{ item.quantity }} × {{ item.price }} EGP
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -37,5 +37,15 @@ export class HeaderComponent {
   closeMenu() {
     this.isMenuCollapsed = true;
   }
+
+  navigateHome() {
+    this.closeMenu();
+    // If user is admin, redirect to dashboard
+    if (this._authS.getRole() === 'admin') {
+      this._router.navigate(['/dashboard']);
+    } else {
+      this._router.navigate(['/home']);
+    }
+  }
   
 }
