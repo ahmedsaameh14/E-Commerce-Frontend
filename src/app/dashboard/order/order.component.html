@@ -136,8 +136,8 @@
               >
                 <div class="d-flex align-items-center gap-2 p-2 bg-light rounded">
                   <img
-                    [src]="item.productId.imgURL"
-                    alt="{{ item.productId.name }}"
+                    [src]="item.productId?.imgURL"
+                    alt="{{ item.productId?.name }}"
                     class="rounded" 
                     style="width: 40px; height: 40px; object-fit: cover;"
                   />
@@ -174,8 +174,8 @@
               >
                 <div class="d-flex align-items-center gap-2 p-2 bg-light rounded" style="max-width: 200px;">
                   <img
-                    [src]="item.productId.imgURL"
-                    alt="{{ item.productId.name }}"
+                    [src]="item.productId?.imgURL"
+                    alt="{{ item.productId?.name }}"
                     class="rounded" 
                     style="width: 40px; height: 40px; object-fit: cover;"
                   />
